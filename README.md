@@ -1,2 +1,2 @@
 # C
-My C Code
+An emulation of DV algorithm
