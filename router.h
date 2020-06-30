@@ -1,8 +1,7 @@
 #ifndef __ROUTER_H__
 #define __ROUTER_H__
-#define INFINITY 1000
+#include "graph.h"
 #include "queue.h"
-#include <pthread.h>
 
 typedef struct router {
     int id;

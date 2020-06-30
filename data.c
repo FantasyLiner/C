@@ -15,5 +15,5 @@ void destroyData(Data data) {
 }
 
 void showData(Data data) {
-    printf("id = %d\n", data->id);
+    printf("id = %-5d\n", data->id);
 }

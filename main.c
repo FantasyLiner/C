@@ -5,44 +5,9 @@
 #include <pthread.h>
 #include <time.h>
 #include "router.h"
+#include "graph.h"
+#include "dij.h"
 #define SIZE 10
-
-int ** createGraph(int size) {
-    int ** graph = (int **) malloc(sizeof(int *) * size);
-    for (int i = 0; i < size; i++) {
-        graph[i] = (int *) malloc(sizeof(int) * size);
-    }
-    srand((unsigned)time(0));
-    for (int i = 0; i < size; i++) {
-        for (int j = i; j < size; j++) {
-            if (i == j) {
-                graph[i][j] = 0;
-            }
-            //else if (rand() % 10 < 7) {
-            else if (true) {
-                graph[i][j] = graph[j][i] = rand() % 10 + 1;
-            }
-            else {
-                graph[i][j] = graph[j][i] = INFINITY;
-            }
-        }
-    }
-    return graph;
-}
-
-void showGraph(int ** graph, int size) {
-    printf("%5s", "");
-    for (int i = 0; i < size; i++)
-        printf("%6d", i);
-    putchar('\n');
-    for (int i = 0; i < size; i++) {
-        printf("%5d", i);
-        for (int j = 0; j < size; j++) {
-            printf("%6d", graph[i][j]);
-        }
-        putchar('\n');
-    }
-}
 
 Router router[SIZE];
 
@@ -61,7 +26,7 @@ int main() {
     puts("This is graph:");
     showGraph(graph, SIZE);
     putchar('\n');
-    struct rUpdateArgs args[3];
+    struct rUpdateArgs args[SIZE];
     for (int i = 0; i < SIZE; i++) {
         router[i] = createRouter(i, SIZE);
     }
@@ -75,11 +40,15 @@ int main() {
         pthread_create(&thread[i], NULL, (void *)routerUpdate, &(args[i]));
     }
 
-    while (true) {
-        sleep(1);
-        for (int i = 0; i < SIZE; i++) {
-            printf("table %d:\n", i);
-            showTable(router[i]->table, SIZE);
-        }
+    sleep(10);
+    for (int i = 0; i < SIZE; i++) {
+        printf("Table %d:\n", i);
+        showArray(router[i]->table[i], SIZE);
     }
+
+    for (int i = 0; i < SIZE; i++) {
+        printf("%d\n", i);
+        shortestPathFromStartPoint(i, graph, SIZE);
+    }
+
 }
