@@ -1,2 +1,2 @@
 # C
-An emulation of DV algorithm and OPSF (Dijkstra algorithm) on internet
+An emulation of the BGP (DV algorithm) and the OPSF (Dijkstra algorithm) on internet
